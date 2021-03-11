@@ -2,6 +2,7 @@ from scrape import scrape_url, pickle_all_urls
 from preprocess import clean_text
 from algorithm import create_word_count_dict, calculate_tf_idf
 from config import RANDOM_SENTENCES
+from config import data_set
 
 
 def scrape_book():
@@ -18,15 +19,14 @@ def scrape_book():
 
 
 def main():
-    sentence_list = [clean_text(sentence.split()) for sentence in RANDOM_SENTENCES]
+    sentence_list = [clean_text(sentence.split()) for sentence in data_set]
     sentence_list = [create_word_count_dict(sentence) for sentence in sentence_list]
-    calculate_tf_idf(sentence_list)
-
-    # for sentence in sentence_list:
-    #     for key, value in sentence.items():
-    #         print(f"{key}: {value}")
-    #     print('------------------'*10)
-
+    dict_list = calculate_tf_idf(sentence_list)
+    for book in dict_list:
+        new_book = dict(sorted(book.items(), key=lambda t: t[1], reverse=True))
+        for key, value in new_book.items():
+            print(key, value)
+        print('_' * 10)
 
 
 if __name__ == '__main__':

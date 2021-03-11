@@ -12,3 +12,10 @@ RANDOM_SENTENCES = [
     "Swim at your own risk was taken as a challenge for the group of Kansas City college students.",
     "She works two jobs to make ends meet; at least, that was her reason for not having time to join us, jobs."
 ]
+
+
+data_set = [
+    "I enjoy reading about Machine Learning and Machine Learning is my PhD subject",
+    "I would enjoy a walk in the park",
+    "I was reading in the library"
+]
