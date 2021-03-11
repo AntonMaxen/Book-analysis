@@ -7,22 +7,15 @@ nltk.download('wordnet')
 nltk.download('averaged_perceptron_tagger')
 
 
-def pos_tagger(text_list):
-    conv_list = ' '.join(text_list)
-    sent = TextBlob(conv_list)
-    tag_dict = {"J": 'a', "N": 'n', "V": 'v', "R": 'r'}
-    words_tags = [(w, tag_dict.get(pos[0], 'n')) for w, pos in sent.tags]
-    lemma_list = [wd.lemmatize(tag) for wd, tag in words_tags]
-    # print(words_tags)
-    return lemma_list
-
-
 def stemmer(text_list):
     new_text_list = []
     ps = PorterStemmer()
+
     for text in text_list:
-        new_text_list.append(ps.stem(text))
-        # print(text + "->" + ps.stem(text))
+        stemmed_text = ps.stem(text)
+        new_text_list.append(stemmed_text)
+        if text != stemmed_text:
+            print(text + "->" + stemmed_text)
     return new_text_list
 
 
@@ -31,8 +24,11 @@ def lemmatize(text_list):
     new_text_list = []
     lemmatizer = WordNetLemmatizer()
     for text in text_list:
-        new_text_list.append(lemmatizer.lemmatize(text))
-        # print(text + "->" + lemmatizer.lemmatize(text))
+        lemmed_text = lemmatizer.lemmatize(text)
+        new_text_list.append(lemmed_text)
+        if text != lemmed_text:
+            print(text + "->" + lemmed_text)
+
     return new_text_list
 
 
@@ -64,7 +60,6 @@ def clean_text(text_list):
     text_list = remove_symbols(text_list)
     text_list = remove_singel_characters(text_list)
     text_list = remove_empty_strings(text_list)
-    text_list = pos_tagger(text_list)
     text_list = lemmatize(text_list)
     text_list = stemmer(text_list)
     return text_list
