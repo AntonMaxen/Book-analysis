@@ -56,14 +56,12 @@ def filter_page(soup):
 
 def main():
     url = 'https://www.gutenberg.org/files/25830/25830-h/25830-h.htm'
-
     full_path = get_page(url)
     soup = load_page(full_path)
     filter_page(soup)
     text_list = soup.body.get_text(separator="\n", strip=True).split()
     text_list = clean_text(text_list)
     print([text for text in text_list])
-
 
 
 if __name__ == '__main__':
