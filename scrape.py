@@ -3,7 +3,7 @@ import requests
 import pickle
 from pathlib import Path
 import path_management as pm
-from preprocess import lemmatize, clean_text
+from preprocess import lemmatize, clean_text, create_word_count_dict
 
 
 def pickle_result(result):
@@ -62,6 +62,12 @@ def main():
     text_list = soup.body.get_text(separator="\n", strip=True).split()
     text_list = clean_text(text_list)
     print([text for text in text_list])
+    word_count_dict = create_word_count_dict(text_list)
+    for key, value in word_count_dict.items():
+        print(f"{key}: {value}")
+    # with open('word_count_dict.txt', 'w') as f:
+    #     for item in text_list:
+    #         f.write("%s\n" % item)
 
 
 if __name__ == '__main__':
