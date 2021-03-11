@@ -1,18 +1,35 @@
 import nltk
-from nltk.stem import WordNetLemmatizer
+from nltk.stem import WordNetLemmatizer, PorterStemmer
 from nltk.corpus import stopwords
 import re
+from textblob import TextBlob
+nltk.download('punkt')
 nltk.download('wordnet')
+nltk.download('averaged_perceptron_tagger')
 nltk.download('stopwords')
-
 STOPWORDS = stopwords.words('english') + ['and']
 
 
-def lemmatize(text_list):
-    lemmatizer = WordNetLemmatizer()
+def stemmer(text_list):
     new_text_list = []
+    ps = PorterStemmer()
+
     for text in text_list:
-        new_text_list.append(lemmatizer.lemmatize(text))
+        stemmed_text = ps.stem(text)
+        new_text_list.append(stemmed_text)
+        if text != stemmed_text:
+            print(text + "->" + stemmed_text)
+    return new_text_list
+
+
+def lemmatize(text_list):
+    new_text_list = []
+    lemmatizer = WordNetLemmatizer()
+    for text in text_list:
+        lemmed_text = lemmatizer.lemmatize(text)
+        new_text_list.append(lemmed_text)
+        if text != lemmed_text:
+            print(text + "->" + lemmed_text)
 
     return new_text_list
 
@@ -22,7 +39,7 @@ def remove_encoding(text_list):
     return text_list
 
 
-def remove_symbols(text_list):
+def remove_symbols(text_list):  # TODO: maybe exculde apostrophes and make separate method?
     text_list = [re.sub('[^a-zA-Z0-9 ]', '', text) for text in text_list]
     return text_list
 
@@ -79,8 +96,9 @@ def clean_text(text_list):
     text_list = remove_encoding(text_list)
     text_list = text_list_to_lower(text_list)
     text_list = remove_stop_words(text_list)
-    text_list = lemmatize(text_list)
     text_list = remove_symbols(text_list)
     text_list = remove_singel_characters(text_list)
     text_list = remove_empty_strings(text_list)
+    text_list = lemmatize(text_list)
+    text_list = stemmer(text_list)
     return text_list

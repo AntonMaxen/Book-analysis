@@ -3,7 +3,7 @@ import requests
 import pickle
 from pathlib import Path
 import path_management as pm
-from preprocess import clean_text, create_word_count_dict
+from preprocess import lemmatize, clean_text, create_word_count_dict
 
 
 def pickle_result(result):
