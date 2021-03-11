@@ -3,7 +3,8 @@ import requests
 import pickle
 from pathlib import Path
 import path_management as pm
-from preprocess import lemmatize, clean_text, create_word_count_dict
+from preprocess import clean_text
+from config import URL_LIST
 
 
 def pickle_result(result):
@@ -54,21 +55,15 @@ def filter_page(soup):
             element.decompose()
 
 
-def main():
-    url = 'https://www.gutenberg.org/files/25830/25830-h/25830-h.htm'
+def scrape_url(url):
     full_path = get_page(url)
     soup = load_page(full_path)
     filter_page(soup)
     text_list = soup.body.get_text(separator="\n", strip=True).split()
     text_list = clean_text(text_list)
-    print([text for text in text_list])
-    word_count_dict = create_word_count_dict(text_list)
-    for key, value in word_count_dict.items():
-        print(f"{key}: {value}")
-    # with open('word_count_dict.txt', 'w') as f:
-    #     for item in text_list:
-    #         f.write("%s\n" % item)
+    return text_list
 
-
-if __name__ == '__main__':
-    main()
+def pickle_all_urls():
+    for url in URL_LIST:
+        full_path = get_page(url)
+        soup = load_page(full_path)
