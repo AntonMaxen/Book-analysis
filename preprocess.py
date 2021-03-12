@@ -18,7 +18,8 @@ def stemmer(text_list):
         stemmed_text = ps.stem(text)
         new_text_list.append(stemmed_text)
         if text != stemmed_text:
-            print(text + "->" + stemmed_text)
+            #print(text + "->" + stemmed_text)
+            pass
     return new_text_list
 
 
@@ -29,7 +30,8 @@ def lemmatize(text_list):
         lemmed_text = lemmatizer.lemmatize(text)
         new_text_list.append(lemmed_text)
         if text != lemmed_text:
-            print(text + "->" + lemmed_text)
+            # print(text + "->" + lemmed_text)
+            pass
 
     return new_text_list
 

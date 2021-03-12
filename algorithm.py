@@ -1,4 +1,5 @@
 import math
+from preprocess import clean_text
 
 
 def create_word_count_dict(text_list):
@@ -41,7 +42,7 @@ def calculate_tf_idf(dict_list):
         new_dict = {}
         for term in text_dict:
             tf_score = term_frequency(term, text_dict)
-            print(f"{term}: \ntf_score: {tf_score}, term count in text: {text_dict[term]}")
+            # print(f"{term}: \ntf_score: {tf_score}, term count in text: {text_dict[term]}")
             idf_score = inverse_document_frequency(term, dict_list)
             tf_idf = tf_score * idf_score
             new_dict[term] = tf_idf
@@ -50,6 +51,17 @@ def calculate_tf_idf(dict_list):
 
     return tf_idf_dict_list
 
+
+def matching_score(query_list, books):
+    m_scores = [0 for _ in books]
+    # Clean the query as you would with the books
+    for word in query_list:
+        for i, book in enumerate(books):
+            if word in book:
+                print(book[word])
+                m_scores[i] += book[word]
+
+    return m_scores
 
 """
 tf-idf(t,d) = tf(t,d) * log(N/df + 1))
