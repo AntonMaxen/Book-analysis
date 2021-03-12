@@ -1,3 +1,6 @@
+import math
+
+
 def create_word_count_dict(text_list):
     term_dict = {}
     for term in set(text_list):
@@ -26,16 +29,25 @@ def term_frequency(term, text_dict):
     return text_dict[term] / len(text_dict)
 
 
-def inverse_document_frequency():
-    pass
+def inverse_document_frequency(word, dict_list):
+    total_documents = len(dict_list)
+    docs_with_term = len([my_dict for my_dict in dict_list if word in my_dict])
+    return math.log(total_documents / docs_with_term)
 
 
 def calculate_tf_idf(dict_list):
     tf_idf_dict_list = []
     for text_dict in dict_list:
+        new_dict = {}
         for term in text_dict:
             tf_score = term_frequency(term, text_dict)
             print(f"{term}: \ntf_score: {tf_score}, term count in text: {text_dict[term]}")
+            idf_score = inverse_document_frequency(term, dict_list)
+            tf_idf = tf_score * idf_score
+            new_dict[term] = tf_idf
+
+        tf_idf_dict_list.append(new_dict)
+
     return tf_idf_dict_list
 
 
