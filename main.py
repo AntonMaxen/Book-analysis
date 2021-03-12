@@ -1,7 +1,10 @@
 from scrape import scrape_url, pickle_all_urls
 from preprocess import clean_text
-from algorithm import create_word_count_dict, calculate_tf_idf, matching_score
-from config import RANDOM_SENTENCES, book_of_interest, URL_LIST
+from algorithm import (
+    create_word_count_dict, calculate_tf_idf, matching_score, get_total_vocab,
+    vectorize_book, cosininus_similarity
+)
+from config import RANDOM_SENTENCES, book_of_interest, URL_LIST, query
 from config import data_set
 
 
@@ -49,6 +52,40 @@ def main():
     print(scores)
 
 
+def test():
+    sentence_list = [clean_text(sentence.split()) for sentence in RANDOM_SENTENCES]
+    sentence_list = [create_word_count_dict(sentence) for sentence in sentence_list]
+    clean_query_book = clean_text(query.split())
+    clean_query_dict = create_word_count_dict(clean_query_book)
+    sentence_list.append(clean_query_dict)
+    dict_list = calculate_tf_idf(sentence_list)
+    total_vocab = get_total_vocab(dict_list)
+
+    query_vector = vectorize_book(dict_list[-1], total_vocab)
+    del dict_list[-1]
+
+    angles = []
+    for tfidf_dict in dict_list:
+        b_vector = vectorize_book(tfidf_dict, total_vocab)
+        cos_sim = cosininus_similarity(query_vector, b_vector)
+        angles.append(cos_sim)
+
+    print(angles)
+
+
+
+def book_recommendation():
+    list_of_texts = [scrape_url(url) for url in URL_LIST]
+    list_of_texts = [clean_text(text_list) for text_list in list_of_texts]
+    list_of_word_count_dicts = [create_word_count_dict(text_list) for text_list in list_of_texts]
+    dict_list = calculate_tf_idf(list_of_word_count_dicts)
+    scraped_book = scrape_url(book_of_interest)
+    cleaned_book = clean_text(scraped_book)
+    word_count_dict = [create_word_count_dict(cleaned_book)]
+    calculate_tf_idf()
+    total_vocab = get_total_vocab(dict_list)
+    query_vector = vectorize_book(cleaned_book, total_vocab)
+    print(query_vector)
 
 if __name__ == '__main__':
-    scrape_and_compare()
+    test()

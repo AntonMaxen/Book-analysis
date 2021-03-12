@@ -26,6 +26,9 @@ RANDOM_SENTENCES = [
 ]
 
 
+query = "The swirled lollipop had issues with the pop rock candy."
+
+
 data_set = [
     "I enjoy reading about Machine Learning and Machine Learning is my PhD subject",
     "I would enjoy a walk in the park",
@@ -33,11 +36,16 @@ data_set = [
 ]
 
 """
-['a', 'b']
-['a', 'b', 'c']
-['b', 'd', 'e']
 
+x: ['a', 'b', 'c', 'd']
+---
+1: ['a', 'b']
+2: ['a', 'b', 'c']
+3: ['b', 'd', 'e']
+---
 total_vocab = ['a', 'b', 'c', 'd', 'e']
+
+x: [1, , 1, ,1 , 1 , 0]
 
 1: [1, 1 ,0 ,0 ,0]
 2: [1, 1, 1, 0, 0]
