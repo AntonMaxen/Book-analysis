@@ -63,6 +63,7 @@ def scrape_url(url):
     text_list = clean_text(text_list)
     return text_list
 
+
 def pickle_all_urls():
     for url in URL_LIST:
         full_path = get_page(url)
