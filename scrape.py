@@ -60,7 +60,6 @@ def scrape_url(url):
     soup = load_page(full_path)
     filter_page(soup)
     text_list = soup.body.get_text(separator="\n", strip=True).split()
-    text_list = clean_text(text_list)
     return text_list
 
 
