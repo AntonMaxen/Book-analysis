@@ -3,8 +3,8 @@ import requests
 import pickle
 from pathlib import Path
 import path_management as pm
-from preprocess import clean_text
 from config import URL_LIST
+import re
 
 
 def pickle_result(result):
@@ -55,12 +55,35 @@ def filter_page(soup):
             element.decompose()
 
 
+def get_title(soup):
+    paragraphs = soup.body.find_all()
+    for p in paragraphs:
+        if '*** START' in p.text:
+            title = p.text
+            title = title.strip()
+            title = title.encode('ascii', 'ignore').decode()
+            title = re.sub('\r', '', title)
+            title = re.sub('\n', ' ', title)
+
+            regex = re.compile('(\*{3}[^\*]*\*{3})')
+            match_obj = regex.search(title)
+            if match_obj:
+                title = match_obj[0]
+
+            title = re.sub('\*{3} START OF (THIS|THE) PROJECT GUTENBERG EBOOK ', '', title)
+            title = title.replace('***', '').strip().title()
+            return title
+
+
 def scrape_url(url):
     full_path = get_page(url)
     soup = load_page(full_path)
+    title = get_title(soup)
     filter_page(soup)
     text_list = soup.body.get_text(separator="\n", strip=True).split()
-    return text_list
+    book_dict = {'title': title,
+                 'text_list': text_list}
+    return book_dict
 
 
 def pickle_all_urls():

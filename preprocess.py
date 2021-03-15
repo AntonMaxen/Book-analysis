@@ -42,7 +42,7 @@ def remove_encoding(text_list):
 
 
 def remove_symbols(text_list):  # TODO: maybe exculde apostrophes and make separate method?
-    text_list = [re.sub('[^a-zA-Z0-9 ]', '', text) for text in text_list]
+    text_list = [re.sub('[^a-zA-Z0-9 ]', ' ', text).strip() for text in text_list]
     return text_list
 
 
@@ -75,6 +75,7 @@ def clean_text(text_list):
     text_list = text_list_to_lower(text_list)
     text_list = remove_stop_words(text_list)
     text_list = remove_symbols(text_list)
+
     text_list = remove_singel_characters(text_list)
     text_list = remove_empty_strings(text_list)
     text_list = lemmatize(text_list)
