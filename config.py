@@ -12,10 +12,11 @@ URL_LIST = ['https://www.gutenberg.org/files/25830/25830-h/25830-h.htm',
             'https://www.gutenberg.org/files/64790/64790-h/64790-h.htm',
             'https://www.gutenberg.org/files/2610/2610-h/2610-h.htm',
             'https://www.gutenberg.org/files/32300/32300-h/32300-h.htm',
-            'https://www.gutenberg.org/files/83/83-h/83-h.htm'
+            'https://www.gutenberg.org/files/83/83-h/83-h.htm',
+            'https://www.gutenberg.org/files/103/103-h/103-h.htm'
             ]
 
-book_of_interest = 'https://www.gutenberg.org/files/103/103-h/103-h.htm'
+book_of_interest = 'https://www.gutenberg.org/files/84/84-h/84-h.htm'
 
 RANDOM_SENTENCES = [
     "The swirled lollipop had issues with the pop rock candy.",
